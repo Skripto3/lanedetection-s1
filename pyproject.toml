@@ -1,0 +1,33 @@
+[tool.ruff]
+line-length = 100
+
+target-version = "py311"
+
+lint.select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes (unused vars, imports, etc.)
+    "N",   # pep8-naming (variable, function, class naming)
+    "I",   # import sorting
+    "B",   # bugbear (common mistakes)
+    "UP",  # pyupgrade (modern Python syntax)
+    "PL",  # pylint rules (extra checks)
+]
+
+lint.ignore = [
+    "E501",   # line too long (Ruff formatter handles wrapping)
+]
+
+fix = true
+
+
+[tool.ruff.format]
+quote-style = "double"             
+indent-style = "space"
+line-ending = "auto"
+skip-magic-trailing-comma = false
+
+
+[tool.ruff.lint.pep8-naming]
+# Accept standard snake_case + CamelCase for classes
+classmethod-decorators = ["classmethod"]
