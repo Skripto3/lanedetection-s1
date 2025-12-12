@@ -1,6 +1,8 @@
 import cv2
+import numpy as np
 
 import imageFilter as iF
+import roiDetection as rD
 
 
 def lane_detection(input_path):
@@ -32,6 +34,9 @@ def lane_detection(input_path):
         #Algorythem for lane Detection:
         canny_frame = iF.canny(frame)
 
+        cropped_frame = rD.region_of_interest(canny_frame)
+        lines = __lines(cropped_frame)
+
         channel_canny_frame = cv2.cvtColor(canny_frame, cv2.COLOR_GRAY2BGR)
 
 
@@ -41,3 +46,21 @@ def lane_detection(input_path):
     out.release()
     cv2.destroyAllWindows()
     return output_path
+
+
+def __lines(cropped_frame):
+    '''
+    sucht nach linien im gegebenen frame mittels Hough Transformation
+
+    :param cropped_frame: frame in dem linien gesucht werden sollen(nur bereich im roi)
+    :return: gefundene linien
+    '''
+    return cv2.HoughLinesP(
+            cropped_frame,
+            2,              #Schritte in denen gesucht wird (je kleiner desto genauer)
+            np.pi / 180,    #Grad in denen gesucht wird (je kleiner desto genauer)
+            100,            #Min anzahl für "votes" damits line wird (je größer desto weniger linien)
+            np.array([]),
+            minLineLength=40,   #Min abstand zwischen linien
+            maxLineGap=5,       #Max abstand zwischen linien um zu verbinden
+        )
