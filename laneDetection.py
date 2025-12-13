@@ -36,11 +36,10 @@ def lane_detection(input_path):
 
         cropped_frame = rD.region_of_interest(canny_frame)
         lines = __lines(cropped_frame)
+        lines_frame = __lines_frame(frame, lines)
 
-        channel_canny_frame = cv2.cvtColor(canny_frame, cv2.COLOR_GRAY2BGR)
 
-
-        processed = channel_canny_frame
+        processed = lines_frame
         out.write(processed)
     cap.release()
     out.release()
@@ -48,12 +47,14 @@ def lane_detection(input_path):
     return output_path
 
 
+
+
 def __lines(cropped_frame):
     '''
     sucht nach linien im gegebenen frame mittels Hough Transformation
 
     :param cropped_frame: frame in dem linien gesucht werden sollen(nur bereich im roi)
-    :return: gefundene linien
+    :return: gefundene linien as array
     '''
     return cv2.HoughLinesP(
             cropped_frame,
@@ -64,3 +65,20 @@ def __lines(cropped_frame):
             minLineLength=40,   #Min abstand zwischen linien
             maxLineGap=5,       #Max abstand zwischen linien um zu verbinden
         )
+
+
+def __lines_frame(frame, lines):
+    '''
+    fügt die gegebenen linien zu einem frame zusammen.
+    dabei ist der frame so groß wie der originale frame
+
+    :param frame: frame der größe des originalen frames
+    :param lines: linien die zusammengefügt werden sollen
+    :return: alle linien in einem frame
+    '''
+    line_frame = np.zeros_like(frame)
+    if lines is not None:
+        for line in lines:
+            x1, y1, x2, y2 = line.reshape(4)
+            cv2.line(line_frame, (x1, y1), (x2, y2), (255, 0, 0), 10)
+    return line_frame
