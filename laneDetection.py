@@ -34,12 +34,18 @@ def lane_detection(input_path):
         #Algorythem for lane Detection:
         canny_frame = iF.canny(frame)
 
-        cropped_frame = rD.region_of_interest(canny_frame)
-        lines = __lines(cropped_frame)
-        avrage_lines = __avrage_lines(frame, lines)
-        lines_frame = __lines_frame(frame, avrage_lines)
+        #cropped_frame = rD.region_of_interest(canny_frame)
+        #lines = __lines(cropped_frame)
+        #avrage_lines = __avrage_lines(frame, lines)
+        #lines_frame = __lines_frame(frame, avrage_lines)
+
+        lines = __lines(canny_frame)
+        filtered_lines = __throwaway_lines(frame, lines)
+        #avrage_lines = __avrage_lines(frame, lines)
+        lines_frame = __lines_frame(frame, filtered_lines)
 
 
+        #processed = iF.image_overlay(frame, lines_frame)
         processed = iF.image_overlay(frame, lines_frame)
         out.write(processed)
     cap.release()
@@ -47,7 +53,26 @@ def lane_detection(input_path):
     cv2.destroyAllWindows()
     return output_path
 
+def __throwaway_lines(frame, lines):
+    '''
+    wirft linien weg die außerhalb eines bestimmten winkel bereichs liegen
 
+    :param frame: frame in dem die linien sind
+    :param lines: linien die gefiltert werden sollen
+    :return: gefilterte linien als array
+    '''
+    filtered_lines = []
+    if lines is None:
+        return np.array([])
+
+    for line in lines:
+        x1, y1, x2, y2 = line.reshape(4)
+        parameters = np.polyfit((x1, x2), (y1, y2), 1)
+        slope = parameters[0]
+        angle = np.arctan(slope) * 180 / np.pi
+        if 20 < abs(angle) < 60:  # noqa: PLR2004 ------------- nur linien mit einem winkel zwischen 20 und 60 grad behalten
+            filtered_lines.append(line)
+    return np.array(filtered_lines)
 
 
 def __lines(cropped_frame):
