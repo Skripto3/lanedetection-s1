@@ -3,6 +3,7 @@ import numpy as np
 
 import imageFilter as iF
 import roiDetection as rD
+import progressbar as pB
 
 
 def lane_detection(input_path):
@@ -16,7 +17,7 @@ def lane_detection(input_path):
     :rtype: str
     '''
 
-    output_path = "output/" + input_path.split("/")[-1]
+    output_path = "output/" + input_path.split("/")[-1] # "/"" für windows anpassen
 
     cap = cv2.VideoCapture(input_path)
     fps = cap.get(cv2.CAP_PROP_FPS)
@@ -26,18 +27,25 @@ def lane_detection(input_path):
     fourcc = cv2.VideoWriter_fourcc(*"mp4v")
     out = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
 
+    i = 0
+    max_index = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
             break
 
-        #Algorythem for lane Detection:
-        canny_frame = iF.canny(frame)
+        #Progress Bar
+        pB.print_progress_bar(i, max_index, bar_length=40)
+        i += 1
 
-        #cropped_frame = rD.region_of_interest(canny_frame)
-        #lines = __lines(cropped_frame)
-        #avrage_lines = __avrage_lines(frame, lines)
-        #lines_frame = __lines_frame(frame, avrage_lines)
+        #Algorythem for lane Detection:
+        roi_frame = rD.region_of_interest(frame)
+        bilateral_frame = iF.bilateral_filter(roi_frame)
+        white_frame = iF.white_image(bilateral_frame)
+        morph_frame = iF.morphological_cleanup(white_frame)
+        cleanup = iF.clean_small_objects(morph_frame)
+        canny_frame = iF.canny(cleanup)
 
         lines = __lines(canny_frame)
         filtered_lines = __throwaway_lines(frame, lines)
@@ -67,8 +75,12 @@ def __throwaway_lines(frame, lines):
 
     for line in lines:
         x1, y1, x2, y2 = line.reshape(4)
-        parameters = np.polyfit((x1, x2), (y1, y2), 1)
-        slope = parameters[0]
+
+        dx = x2 - x1
+        dy = y2 - y1
+        if dx == 0:
+            continue
+        slope = dy / dx
         angle = np.arctan(slope) * 180 / np.pi
         if 20 < abs(angle) < 60:  # noqa: PLR2004 ------------- nur linien mit einem winkel zwischen 20 und 60 grad behalten
             filtered_lines.append(line)
