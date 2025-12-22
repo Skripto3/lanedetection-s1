@@ -2,8 +2,8 @@ import cv2
 import numpy as np
 
 import imageFilter as iF
+import progressbar
 import roiDetection as rD
-import progressbar as pB
 
 
 def lane_detection(input_path):
@@ -36,7 +36,7 @@ def lane_detection(input_path):
             break
 
         #Progress Bar
-        pB.print_progress_bar(i, max_index, bar_length=40)
+        progressbar.print_progress_bar(i, max_index, bar_length=40)
         i += 1
 
         #Algorythem for lane Detection:
