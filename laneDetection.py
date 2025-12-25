@@ -35,10 +35,6 @@ def lane_detection(input_path):
         if not ret:
             break
 
-        #Progress Bar
-        progressbar.print_progress_bar(i, max_index, bar_length=40)
-        i += 1
-
         #Algorythem for lane Detection:
         roi_frame = rD.region_of_interest(frame)
         bilateral_frame = iF.bilateral_filter(roi_frame)
@@ -52,10 +48,14 @@ def lane_detection(input_path):
         #avrage_lines = __avrage_lines(frame, lines)
         lines_frame = __lines_frame(frame, filtered_lines)
 
-
         #processed = iF.image_overlay(frame, lines_frame)
         processed = iF.image_overlay(frame, lines_frame)
         out.write(processed)
+
+        #Progress Bar
+        progressbar.print_progress_bar(i, max_index, bar_length=40)
+        i += 1
+
     cap.release()
     out.release()
     cv2.destroyAllWindows()
