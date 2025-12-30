@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import cv2
 import numpy as np
 
@@ -17,7 +19,7 @@ def lane_detection(input_path):
     :rtype: str
     '''
 
-    output_path = "output/" + input_path.split("/")[-1] # "/"" für windows anpassen
+    output_path = Path("output") / Path(input_path).name
 
     cap = cv2.VideoCapture(input_path)
     fps = cap.get(cv2.CAP_PROP_FPS)
