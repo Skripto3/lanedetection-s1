@@ -1,11 +1,27 @@
+import sys
 from pathlib import Path
 
 import cv2
+import error as e
 import numpy as np
 
 import imageFilter as iF
 import progressbar
 import roiDetection as rD
+
+
+def main():
+    print("Video processing started...")
+    MIN_ARGS = 2  # noqa: N806
+    if len(sys.argv) < MIN_ARGS:
+        e.input_error("not enough arguments provided")
+        sys.exit(1)
+    elif len(sys.argv) == MIN_ARGS:
+        sys.argv.append(None)
+
+    cap = lane_detection(sys.argv[1], sys.argv[2])
+    print("Video processing completed.")
+    print("Processed video saved at:", cap)
 
 
 def lane_detection(input_path):
@@ -164,3 +180,6 @@ def __lines_frame(frame, lines):
             x1, y1, x2, y2 = line.reshape(4)
             cv2.line(line_frame, (x1, y1), (x2, y2), (255, 0, 0), 10)
     return line_frame
+
+if __name__ == "__main__":
+    main()
