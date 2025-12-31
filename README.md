@@ -23,7 +23,15 @@ Writen as a projact for class.
   pip install -r requirements.txt
   
 ---
+## Installation
+It is recommended to install this project inside a Python virtual environment.
+```bash
+python3 -m venv .venv
+source .venv/bin/activate  # Linux / macOS
+# .venv\Scripts\activate   # Windows (PowerShell)
+pip install .
 
+---
 ## Usage
 Run in terminal:
 (If output path not specefied it is placed in the output folder)

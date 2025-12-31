@@ -6,7 +6,7 @@ import error as e
 import numpy as np
 
 import imageFilter as iF
-import progressbar as progressbar
+import progressbar
 import roiDetection as rD
 
 
