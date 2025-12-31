@@ -1,3 +1,11 @@
+[project]
+name = "lanedetection"
+version = "0.1.0"
+dependencies = ["opencv-python", "numpy"]
+
+[project.scripts]
+lanedetection = "laneDetection:main"
+
 [tool.ruff]
 line-length = 100
 
