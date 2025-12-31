@@ -67,10 +67,8 @@ def lane_detection(input_path, output_path):
 
         lines = __lines(canny_frame)
         filtered_lines = __throwaway_lines(frame, lines)
-        #avrage_lines = __avrage_lines(frame, lines)
         lines_frame = __lines_frame(frame, filtered_lines)
 
-        #processed = iF.image_overlay(frame, lines_frame)
         processed = iF.image_overlay(frame, lines_frame)
         out.write(processed)
 
@@ -125,49 +123,6 @@ def __lines(cropped_frame):
             minLineLength=40,   #Min abstand zwischen linien
             maxLineGap=5,       #Max abstand zwischen linien um zu verbinden
         )
-
-def __avrage_lines(frame, lines):
-    '''
-    berechnet aus den gegebenen linien die durchschnitts linien für links und rechts bezogen auf die steigung
-
-    :param frame: frame in dem die linien sind
-    :param lines: linien die gemittelt werden sollen
-    :return: durchschnitts linien als array
-    '''
-    left_line = None
-    right_line = None
-    if lines is None:
-        return np.array([])
-
-    left_fit = []
-    right_fit = []
-    for line in lines:
-        x1, y1, x2, y2 = line.reshape(4)
-        parameters = np.polyfit((x1, x2), (y1, y2), 1)
-        slope = parameters[0]
-        intercept = parameters[1]
-        if slope < 0:
-            left_fit.append((slope, intercept))
-        else:
-            right_fit.append((slope, intercept))
-
-    if len(left_fit) > 0:
-        left_fit_avrage = np.average(left_fit, axis=0)
-        left_line = __make_coordinates(frame, left_fit_avrage)
-    if len(right_fit) > 0:
-        right_fit_avrage = np.average(right_fit, axis=0)
-        right_line = __make_coordinates(frame, right_fit_avrage)
-    return np.array([line for line in [left_line, right_line] if line is not None])
-
-
-def __make_coordinates(frame, line_parameters):
-    slope, intercept = line_parameters
-    y1 = frame.shape[0]
-    y2 = int(y1 * (3 / 5))
-    x1 = int((y1 - intercept) / slope)
-    x2 = int((y2 - intercept) / slope)
-    return np.array([x1, y1, x2, y2])
-
 
 def __lines_frame(frame, lines):
     '''
