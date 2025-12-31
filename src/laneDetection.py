@@ -2,12 +2,12 @@ import sys
 from pathlib import Path
 
 import cv2
-import src.error as e
+import error as e
 import numpy as np
 
-import src.imageFilter as iF
-import src.progressbar as progressbar
-import src.roiDetection as rD
+import imageFilter as iF
+import progressbar as progressbar
+import roiDetection as rD
 
 
 def main():
