@@ -11,7 +11,7 @@ Writen as a projact for class.
 
 ---
 
-##Requirements
+## Requirements
 - Python 3.0+
 - Libraries:
   - numpy
@@ -20,7 +20,7 @@ Writen as a projact for class.
   
 ---
 
-##Usage
+## Usage
 Run in terminal:
 (If output path not specefied it is placed in the output folder)
 
