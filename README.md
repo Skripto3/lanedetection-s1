@@ -8,6 +8,8 @@ Writen as a projact for class.
 - Noise filtering
 - Canny edge detection
 - Hough Transform lane detection
+- Supports video input and video output
+- CLI command for easy usage
 
 ---
 
@@ -16,7 +18,9 @@ Writen as a projact for class.
 - Libraries:
   - numpy
   - opencv-python (cv2)
-  - pathlib (Path)
+- Install dependencies:
+  ```bash
+  pip install -r requirements.txt
   
 ---
 
