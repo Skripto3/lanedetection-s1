@@ -24,10 +24,11 @@ def main():
     print("Processed video saved at:", cap)
 
 
-def lane_detection(input_path):
+def lane_detection(input_path, output_path):
     '''
     Creats a video with Lanes that are detected from imput File to output File.
-    Needs "output" Folder to store Video
+    Detects lanes by applying various image processing techniques and Hough Transform.
+    Output is saved in the specified output path or in an "output" folder if no output path is provided.
 
 
     :param input_path: path to input video file
@@ -35,7 +36,10 @@ def lane_detection(input_path):
     :rtype: str
     '''
 
-    output_path = Path("output") / Path(input_path).name
+    if output_path is None:
+        output_path = Path("output") / Path(input_path).name
+    else:
+        output_path = Path(output_path) / Path(input_path).name
 
     cap = cv2.VideoCapture(input_path)
     fps = cap.get(cv2.CAP_PROP_FPS)
