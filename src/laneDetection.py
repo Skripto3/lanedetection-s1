@@ -26,13 +26,13 @@ def main():
 
 def lane_detection(input_path, output_path):
     '''
-    Creats a video with Lanes that are detected from imput File to output File.
-    Detects lanes by applying various image processing techniques and Hough Transform.
-    Output is saved in the specified output path or in an "output" folder if no output path is provided.
+    Liest ein Video ein und verarbeitet jedes Frame um Fahrspuren zu erkennen.
+    Das Ergebnis wird in einer neuen Videodatei gespeichert.
+    Gibt daraufhin den Pfad der Ausgabedatei zurück.
 
 
-    :param input_path: path to input video file
-    :return: path to output video file
+    :param input_path: pfad zur Eingabe Videodatei
+    :return: path zur Ausgabe Videodatei
     :rtype: str
     '''
 
@@ -57,7 +57,7 @@ def lane_detection(input_path, output_path):
         if not ret:
             break
 
-        #Algorythem for lane Detection:
+        #Algorythem für lane Detection:
         roi_frame = rD.region_of_interest(frame)
         bilateral_frame = iF.bilateral_filter(roi_frame)
         white_frame = iF.white_image(bilateral_frame)
@@ -83,7 +83,7 @@ def lane_detection(input_path, output_path):
 
 def __throwaway_lines(frame, lines):
     '''
-    wirft linien weg die außerhalb eines bestimmten winkel bereichs liegen
+    Wirft linien weg die außerhalb eines bestimmten winkel bereichs liegen
 
     :param frame: frame in dem die linien sind
     :param lines: linien die gefiltert werden sollen
@@ -109,15 +109,15 @@ def __throwaway_lines(frame, lines):
 
 def __lines(cropped_frame):
     '''
-    sucht nach linien im gegebenen frame mittels Hough Transformation
+    Sucht nach linien im gegebenen frame mittels Hough Transformation
 
     :param cropped_frame: frame in dem linien gesucht werden sollen(nur bereich im roi)
-    :return: gefundene linien as array
+    :return: gefundene linien als array
     '''
     return cv2.HoughLinesP(
             cropped_frame,
-            2,              #Schritte in denen gesucht wird (je kleiner desto genauer)
-            np.pi / 180,    #Grad in denen gesucht wird (je kleiner desto genauer)
+            2,              #Schritte in denen gesucht wird (je kleiner desto genauer/langsamer)
+            np.pi / 180,    #Grad in denen gesucht wird (je kleiner desto genauer/langsamer)
             100,            #Min anzahl für "votes" damits line wird (je größer desto weniger linien)
             np.array([]),
             minLineLength=40,   #Min abstand zwischen linien
@@ -126,7 +126,7 @@ def __lines(cropped_frame):
 
 def __lines_frame(frame, lines):
     '''
-    fügt die gegebenen linien zu einem frame zusammen.
+    fügt die gegebenen linien mit einem frame zusammen.
     dabei ist der frame so groß wie der originale frame
 
     :param frame: frame der größe des originalen frames

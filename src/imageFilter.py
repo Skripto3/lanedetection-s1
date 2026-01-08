@@ -71,7 +71,7 @@ def clean_small_objects(image, min_size=300):
 
     clean = np.zeros_like(image)
 
-    for i in range(1, num_labels):  # skip background
+    for i in range(1, num_labels):  # überspringe Hintergrund
         area = stats[i, cv2.CC_STAT_AREA]
         if area > min_size:
             clean[labels == i] = 255
