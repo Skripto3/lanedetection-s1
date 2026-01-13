@@ -9,6 +9,7 @@ dependencies = [
 
 [project.scripts]
 lanedetection = "laneDetection:main"
+parameter = "parameter:main"
 
 [tool.ruff]
 line-length = 100
