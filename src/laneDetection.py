@@ -14,14 +14,14 @@ def main():
     print("Video processing started...")
     MIN_ARGS = 2  # noqa: N806
     if len(sys.argv) < MIN_ARGS:
-        e.input_error("not enough arguments provided")
+        e.input_error("not enough arguments provided (minimum input_video_path)")
         sys.exit(1)
     elif len(sys.argv) == MIN_ARGS:
         sys.argv.append(None)
 
     cap = lane_detection(sys.argv[1], sys.argv[2])
     print("Video processing completed.")
-    print("Processed video saved at:", cap)
+    print("Saved at: ", cap)
 
 
 def lane_detection(input_path, output_path):
