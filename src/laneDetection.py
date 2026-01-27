@@ -81,11 +81,10 @@ def lane_detection(input_path, output_path):
     cv2.destroyAllWindows()
     return output_path
 
-def __throwaway_lines(frame, lines):
+def __throwaway_lines(lines):
     '''
     Wirft Linien weg die außerhalb eines bestimmten Winkelbereichs liegen
 
-    :param frame: frame in dem die Linien sind
     :param lines: Linien die gefiltert werden sollen
     :return: gefilterte Linien als Array
     '''
