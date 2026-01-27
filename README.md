@@ -8,8 +8,8 @@ Writen as a projact for class.
 - Noise filtering
 - Canny edge detection
 - Hough Transform lane detection
-- Supports video input and video output
-- CLI command for easy usage
+
+- Terminal Application for easy usage
 
 ---
 
@@ -41,4 +41,11 @@ Run in terminal:
 
 ```bash
 lanedetection <input_video_path> [<output_video_path>]
+```
+
+Example:
+```bash
+lanedetection ~/Documents/data/test2.mp4
+#or with output specified
+lanedetection ~/Documents/data/test2.mp4 ~/Downloads/
 ```
