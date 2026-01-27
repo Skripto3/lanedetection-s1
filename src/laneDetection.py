@@ -14,7 +14,7 @@ def main():
     print("Video processing started...")
     MIN_ARGS = 2  # noqa: N806
     if len(sys.argv) < MIN_ARGS:
-        e.input_error("not enough arguments provided (minimum input_video_path)")
+        e.input_error("not enough arguments provided (minimum input_video_path)\n")
         sys.exit(1)
     elif len(sys.argv) == MIN_ARGS:
         sys.argv.append(None)
