@@ -2,9 +2,9 @@ import sys
 from pathlib import Path
 
 import cv2
-import error as e
 import numpy as np
 
+import error as e
 import imageFilter as iF
 import progressbar
 import roiDetection as rD
