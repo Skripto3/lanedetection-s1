@@ -42,10 +42,9 @@ Run in terminal:
 ```bash
 lanedetection <input_video_path> [<output_video_path>]
 ```
-
 Example:
 ```bash
 lanedetection ~/Documents/data/test2.mp4
-#or with output specified
+# or with output specified
 lanedetection ~/Documents/data/test2.mp4 ~/Downloads/
 ```
