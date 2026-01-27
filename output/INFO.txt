@@ -1,1 +1,2 @@
-Hier entstehen alle files, für die der ausgabephat nicht spezifiziert wurde.
+Hier entstehen alle datein, für die die ausgabe nicht spezifiziert wurde.
+Du kannst die datei ruich löschen.

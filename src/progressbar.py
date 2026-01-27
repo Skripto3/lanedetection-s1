@@ -3,8 +3,8 @@ def print_progress_bar(i , max_index, bar_length):
     '''
     Fortschrittsanzeige in der Konsole.
 
-    :param i: jetziger schritt
-    :param max_index: gesamtanzahl der schritte
+    :param i: aktueller stand
+    :param max_index: gesamtanzahl der Schritte
     :param bar_length: länge der anzeige
     '''
     percent = float(i) / max_index

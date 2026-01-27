@@ -7,7 +7,7 @@ def canny(image):
         image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     blur = cv2.GaussianBlur(
-        image, (7, 7), 0# (5,5) oder (7,7) je nach dem wie stark der filter sein soll (je größer desto stärker)
+        image, (7, 7), 0# (5,5) oder (7,7) je nachdem wie stark der filter sein soll (je größer, desto stärker)
     )
     canny = cv2.Canny(blur, 100, 150)
     return canny
