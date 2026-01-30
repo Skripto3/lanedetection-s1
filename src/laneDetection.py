@@ -10,7 +10,7 @@ import progressbar
 import roiDetection as rD
 
 
-def main():
+def main():                     # lanedetection <input_video_path> [<output_video_path>]
     MIN_ARGS = 2  # noqa: N806
     if len(sys.argv) < MIN_ARGS:
         e.input_error("not enough arguments provided (minimum input_video_path)\n")
