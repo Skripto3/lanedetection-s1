@@ -11,7 +11,6 @@ import roiDetection as rD
 
 
 def main():
-    print("Video processing started...")
     MIN_ARGS = 2  # noqa: N806
     if len(sys.argv) < MIN_ARGS:
         e.input_error("not enough arguments provided (minimum input_video_path)\n")
@@ -19,6 +18,7 @@ def main():
     elif len(sys.argv) == MIN_ARGS:
         sys.argv.append(None)
 
+    print("Video processing started...")
     cap = lane_detection(sys.argv[1], sys.argv[2])
     print("Video processing completed.")
     print("Saved at: ", cap)
@@ -66,7 +66,7 @@ def lane_detection(input_path, output_path):
         canny_frame = iF.canny(cleanup)
 
         lines = __lines(canny_frame)
-        filtered_lines = __throwaway_lines(frame, lines)
+        filtered_lines = __throwaway_lines(lines)
         lines_frame = __lines_frame(frame, filtered_lines)
 
         processed = iF.image_overlay(frame, lines_frame)
