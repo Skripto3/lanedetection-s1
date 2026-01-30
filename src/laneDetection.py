@@ -30,7 +30,7 @@ def lane_detection(input_path, output_path):
     Das Ergebnis wird in einer neuen Videodatei gespeichert.
     Gibt daraufhin den Pfad der Ausgabedatei zurück.
 
-
+    :param output_path: pfad zur Ausgabe Videodatei
     :param input_path: pfad zur Eingabe Videodatei
     :return: path zur Ausgabe Videodatei
     :rtype: str
@@ -49,7 +49,7 @@ def lane_detection(input_path, output_path):
     fourcc = cv2.VideoWriter_fourcc(*"mp4v")
     out = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
 
-    i = 0
+    i = 1
     max_index = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
     while cap.isOpened():
@@ -119,7 +119,7 @@ def __lines(cropped_frame):
             np.pi / 180,    #Grad in denen gesucht wird (je kleiner desto genauer/langsamer)
             100,            #Min anzahl für "votes" damits line wird (je größer desto weniger Linien)
             np.array([]),
-            minLineLength=40,   #Min abstand zwischen Linien
+            minLineLength=40,   #Min länge für Linien
             maxLineGap=5,       #Max abstand zwischen Linien um zu verbinden
         )
 
